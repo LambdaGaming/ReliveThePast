@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using EXILED;
 
 namespace ReliveThePast
@@ -12,7 +12,7 @@ namespace ReliveThePast
 
         public void ReloadConfig()
         {
-            EnableRelive = Config.GetBool("enable_relive", true);
+            EnableRelive = Config.GetBool("relive_enable", true);
             if (!EnableRelive)
                 Log.Info("Plugin disabled!");
             else
@@ -30,14 +30,14 @@ namespace ReliveThePast
             if (!EnableRelive)
                 return;
 
-            Info("Starting up \"Re-live The Past - By DefyTheRush\"");
+            Log.Info("Starting up \"Re-live The Past - By DefyTheRush\"");
             Handler = new EventHandlers();
             Events.PlayerDeathEvent += Handler.RunOnPlayerDeath;
         }
 
         public override void OnReload()
         {
-            Info("Reloading \"Re-live The Past\"!");
+            Log.Info("Reloading \"Re-live The Past - By DefyTheRush\"!");
         }
     }
 }

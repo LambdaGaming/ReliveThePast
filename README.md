@@ -5,4 +5,4 @@ Just drop it into %appdata%/Roaming/Plugins and enjoy people constantly respawni
 
 Config Variables:
 - relive_enable: (true or false)
-- relieve_respawn_timer: (decimal or whole number)
+- relive_respawn_timer: (decimal or whole number)

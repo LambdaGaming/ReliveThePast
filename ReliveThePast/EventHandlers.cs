@@ -7,10 +7,12 @@ namespace ReliveThePast
     public class EventHandlers
     {
         Random randNum = new Random();
+        float RespawnTimerValue = (float) Plugin.ReliveRespawnTimer;
+
         public void RunOnPlayerDeath(ref PlayerDeathEvent d)
         {
             ReferenceHub hub = d.Player;
-            Timing.CallDelayed(0.05f, () => RevivePlayer(hub));
+            Timing.CallDelayed(RespawnTimerValue, () => RevivePlayer(hub));
         }
 
         public void RevivePlayer(ReferenceHub rh)
@@ -47,3 +49,4 @@ namespace ReliveThePast
         }
     }
 }
+

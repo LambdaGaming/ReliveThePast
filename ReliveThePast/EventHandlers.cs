@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
 using EXILED;
-using EXILED.Extensions;
 using MEC;
 
 namespace ReliveThePast
 {
     public class EventHandlers
     {
+        Random randNum = new Random();
         public void RunOnPlayerDeath(ref PlayerDeathEvent d)
         {
             ReferenceHub hub = d.Player;
@@ -16,7 +15,6 @@ namespace ReliveThePast
 
         public void RevivePlayer(ReferenceHub rh)
         {
-            Random randNum = new Random();
             int num = randNum.Next(0, 7);
 
             switch (num)

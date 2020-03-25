@@ -6,3 +6,9 @@ Just drop it into %appdata%/Roaming/Plugins and enjoy people constantly respawni
 Config Variables:
 - relive_enable: (true or false)
 - relive_respawn_timer: (decimal or whole number)
+
+Permission Variable:
+- rtp.allow (lets the role use the command "allowautorespawn")
+
+Remote Admin Command:
+- allowautorespawn (requires rtp.allow permission)

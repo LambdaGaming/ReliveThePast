@@ -1,6 +1,7 @@
 using System;
 using EXILED;
 using EXILED.Extensions;
+using EXILED.Patches;
 using MEC;
 
 namespace ReliveThePast
@@ -20,6 +21,11 @@ namespace ReliveThePast
             IsDecontanimationActivated = Map.IsLCZDecontaminated;
             if (AllowRespawning == true)
                 Timing.CallDelayed(RespawnTimerValue, () => RevivePlayer(hub));
+        }
+
+        public void RunOnRoundRestart()
+        {
+            AllowRespawning = false;
         }
 
         public void RunOnCommand(ref RACommandEvent r)
@@ -120,5 +126,4 @@ namespace ReliveThePast
         }
     }
 }
-
 

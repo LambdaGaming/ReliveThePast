@@ -1,7 +1,9 @@
 # ReliveThePast
 An SCP:SL EXILED plugin that respawns players automatically as a non-SCP class
 
-Just drop it into %appdata%/Roaming/Plugins and enjoy people constantly respawning!
+Drop it in the following places (depending on your operating system) and enjoy people respawn!
+- %appdata%/Roaming/Plugins (Windows)
+- ~/.config/Plugins (Linux)
 
 Config Variables:
 - relive_enable: (true or false)

@@ -61,7 +61,7 @@ namespace ReliveThePast
 
         public void RevivePlayer(ReferenceHub rh)
         {
-            int num = randNum.Next(0, 8);
+            int num = randNum.Next(0, 7);
 
             switch (num)
             {
@@ -116,11 +116,9 @@ namespace ReliveThePast
                 case 7:
                     rh.characterClassManager.SetPlayersClass(RoleType.NtfCommander, rh.gameObject);
                     break;
-                case 8:
-                    rh.characterClassManager.SetPlayersClass(RoleType.Spectator, rh.gameObject);
-                    break;
             }
         }
     }
 }
+
 

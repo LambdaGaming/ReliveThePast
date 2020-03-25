@@ -46,6 +46,7 @@ namespace ReliveThePast
 
         public override void OnDisable()
         {
+            Events.RemoteAdminCommandEvent -= Handler.RunOnCommand;
             Events.PlayerDeathEvent -= Handler.RunOnPlayerDeath;
             Handler = null;
         }
@@ -59,6 +60,7 @@ namespace ReliveThePast
             Log.Info("Starting up \"Re-live The Past - By DefyTheRush\"");
             Handler = new EventHandlers();
             Events.PlayerDeathEvent += Handler.RunOnPlayerDeath;
+            Events.RemoteAdminCommandEvent += Handler.RunOnCommand;
         }
 
         public override void OnReload()

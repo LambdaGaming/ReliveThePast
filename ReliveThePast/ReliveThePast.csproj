@@ -32,19 +32,22 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
-      <HintPath>..\..\..\..\..\SCPSL_Server\SCPSL_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <HintPath>\\SERVER-PC\lambda_scp\SCPSL_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp-firstpass">
-      <HintPath>..\..\..\..\..\SCPSL_Server\SCPSL_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
+      <HintPath>\\SERVER-PC\lambda_scp\SCPSL_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
     </Reference>
     <Reference Include="EXILED">
-      <HintPath>C:\Users\hashi\AppData\Roaming\EXILED\EXILED.dll</HintPath>
+      <HintPath>\\SERVER-PC\Users\starw\AppData\Roaming\EXILED\EXILED.dll</HintPath>
     </Reference>
     <Reference Include="EXILED_Events">
-      <HintPath>C:\Users\hashi\AppData\Roaming\Plugins\EXILED_Events.dll</HintPath>
+      <HintPath>\\SERVER-PC\Users\starw\AppData\Roaming\Plugins\EXILED_Events.dll</HintPath>
+    </Reference>
+    <Reference Include="EXILED_Permissions">
+      <HintPath>\\SERVER-PC\Users\starw\AppData\Roaming\Plugins\EXILED_Permissions.dll</HintPath>
     </Reference>
     <Reference Include="Mirror">
-      <HintPath>..\..\..\..\..\SCPSL_Server\SCPSL_Data\Managed\Mirror.dll</HintPath>
+      <HintPath>\\SERVER-PC\lambda_scp\SCPSL_Data\Managed\Mirror.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -55,10 +58,10 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
     <Reference Include="UnityEngine">
-      <HintPath>..\..\..\..\..\SCPSL_Server\SCPSL_Data\Managed\UnityEngine.dll</HintPath>
+      <HintPath>\\SERVER-PC\lambda_scp\SCPSL_Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>..\..\..\..\..\SCPSL_Server\SCPSL_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>\\SERVER-PC\lambda_scp\SCPSL_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

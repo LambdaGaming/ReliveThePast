@@ -11,6 +11,7 @@ namespace ReliveThePast
 		float RespawnTimerValue = ( float ) Plugin.ReliveRespawnTimer;
 		bool IsWarheadDetonated;
 		bool IsDecontanimationActivated;
+		bool IsWarheadInProgress;
 		bool AllowRespawning = true;
 
 		public void RunOnPlayerDeath( ref PlayerDeathEvent d )
@@ -18,15 +19,9 @@ namespace ReliveThePast
 			ReferenceHub hub = d.Player;
 			IsWarheadDetonated = Map.IsNukeDetonated;
 			IsDecontanimationActivated = Map.IsLCZDecontaminated;
-			if ( IsWarheadDetonated || IsDecontanimationActivated )
-				AllowRespawning = false;
-			if ( AllowRespawning )
+			IsWarheadInProgress = Map.IsNukeInProgress;
+			if ( AllowRespawning && !IsWarheadDetonated && !IsDecontanimationActivated && !IsWarheadInProgress )
 				Timing.CallDelayed( RespawnTimerValue, () => RevivePlayer( hub ) );
-		}
-
-		public void RunOnRoundRestart()
-		{
-			AllowRespawning = true;
 		}
 
 		public void RunOnCommand( ref RACommandEvent r )
@@ -67,7 +62,7 @@ namespace ReliveThePast
 		public void RevivePlayer( ReferenceHub rh )
 		{
 			if ( rh.GetRole() != RoleType.Spectator ) return;
-			int num = randNum.Next( 0, 1 );
+			int num = randNum.Next( 0, 2 );
 			switch ( num )
 			{
 				case 0:

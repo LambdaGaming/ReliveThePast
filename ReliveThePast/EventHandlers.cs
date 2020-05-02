@@ -20,7 +20,7 @@ namespace ReliveThePast
 			IsWarheadDetonated = Map.IsNukeDetonated;
 			IsDecontanimationActivated = Map.IsLCZDecontaminated;
 			IsWarheadInProgress = Map.IsNukeInProgress;
-			if ( AllowRespawning && !IsWarheadDetonated && !IsDecontanimationActivated && !IsWarheadInProgress )
+			if ( CheckAllowed() )
 				Timing.CallDelayed( RespawnTimerValue, () => RevivePlayer( hub ) );
 		}
 
@@ -61,7 +61,7 @@ namespace ReliveThePast
 
 		public void RevivePlayer( ReferenceHub rh )
 		{
-			if ( rh.GetRole() != RoleType.Spectator ) return;
+			if ( rh.GetRole() != RoleType.Spectator || !CheckAllowed() ) return;
 			int num = randNum.Next( 0, 2 );
 			switch ( num )
 			{
@@ -72,6 +72,16 @@ namespace ReliveThePast
 					rh.characterClassManager.SetPlayersClass( RoleType.ClassD, rh.gameObject );
 					break;
 			}
+		}
+
+		public bool CheckAllowed()
+		{
+			IsWarheadDetonated = Map.IsNukeDetonated;
+			IsDecontanimationActivated = Map.IsLCZDecontaminated;
+			IsWarheadInProgress = Map.IsNukeInProgress;
+			if ( AllowRespawning && !IsWarheadDetonated && !IsDecontanimationActivated && !IsWarheadInProgress )
+				return true;
+			return false;
 		}
 	}
 }

@@ -1,71 +1,31 @@
-using System;
-using EXILED;
+using Exiled.API.Enums;
+using Exiled.API.Features;
+using events = Exiled.Events.Handlers;
 
 namespace ReliveThePast
 {
-	public class Plugin : EXILED.Plugin
+	public class Plugin : Plugin<Config>
 	{
-		public bool EnableRelive;
-		public static double ReliveRespawnTimer;
-		public override string getName { get; } = "Re-live The Past - By DefyTheRush; Modified by LambdaGaming";
+		private EventHandlers EventHandlers;
 
-		public EventHandlers Handler;
+		public override PluginPriority Priority { get; } = PluginPriority.Medium;
 
-		public void ReloadConfig()
+		public override void OnEnabled()
 		{
-			EnableRelive = Config.GetBool( "relive_enable", true );
-			if ( !EnableRelive )
-				Log.Info( "Plugin disabled!" );
-			else
-			{
-				Log.Info( "Plugin enabled!" );
-				CheckRespawnValue();
-			}
-		}
-
-		public void CheckRespawnValue()
-		{
-			try
-			{
-				ReliveRespawnTimer = Config.GetDouble( "relive_respawn_timer" );
-			}
-			catch ( Exception )
-			{
-				Log.Info( "Detected invalid value in the configuration file! Using default value of 0.05" );
-			}
-			finally
-			{
-				if ( ReliveRespawnTimer < 0.05 )
-				{
-					ReliveRespawnTimer = 0.05;
-					Config.SetString( "relive_respawn_timer", ReliveRespawnTimer.ToString() );
-					Log.Info( "ReliveThePast cannot use a value below 0.05 for respawning! Using default value of: " + ReliveRespawnTimer );
-				}
-			}
-		}
-
-		public override void OnDisable()
-		{
-			Events.RemoteAdminCommandEvent -= Handler.RunOnCommand;
-			Events.PlayerDeathEvent -= Handler.RunOnPlayerDeath;
-			Handler = null;
-		}
-
-		public override void OnEnable()
-		{
-			ReloadConfig();
-			if ( !EnableRelive )
-				return;
-
+			base.OnEnabled();
 			Log.Info( "Starting up \"Re-live The Past - By DefyTheRush; Modified by LambdaGaming\"" );
-			Handler = new EventHandlers();
-			Events.PlayerDeathEvent += Handler.RunOnPlayerDeath;
-			Events.RemoteAdminCommandEvent += Handler.RunOnCommand;
+			EventHandlers = new EventHandlers( this );
+			events.Player.Died += EventHandlers.RunOnPlayerDeath;
+			events.Server.SendingRemoteAdminCommand += EventHandlers.RunOnCommand;
+			Log.Info( $"Successfully loaded." );
 		}
 
-		public override void OnReload()
+		public override void OnDisabled()
 		{
-			Log.Info( "Reloading \"Re-live The Past - By DefyTheRush; Modified by LambdaGaming\"!" );
+			base.OnDisabled();
+			events.Player.Died -= EventHandlers.RunOnPlayerDeath;
+			events.Server.SendingRemoteAdminCommand -= EventHandlers.RunOnCommand;
+			EventHandlers = null;
 		}
 	}
 }

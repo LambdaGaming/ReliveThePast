@@ -1,54 +1,52 @@
-using System;
-using EXILED;
-using EXILED.Extensions;
+﻿using Exiled.API.Features;
+using Exiled.Events.EventArgs;
 using MEC;
+using System;
 
 namespace ReliveThePast
 {
 	public class EventHandlers
 	{
+		private Plugin plugin;
+
+		public EventHandlers( Plugin plugin ) => this.plugin = plugin;
+
 		Random randNum = new Random();
-		float RespawnTimerValue = ( float ) Plugin.ReliveRespawnTimer;
 		bool IsWarheadDetonated;
 		bool IsDecontanimationActivated;
 		bool IsWarheadInProgress;
 		bool AllowRespawning = true;
 
-		public void RunOnPlayerDeath( ref PlayerDeathEvent d )
+		public void RunOnPlayerDeath( DiedEventArgs ev )
 		{
-			ReferenceHub hub = d.Player;
-			IsWarheadDetonated = Map.IsNukeDetonated;
-			IsDecontanimationActivated = Map.IsLCZDecontaminated;
-			IsWarheadInProgress = Map.IsNukeInProgress;
+			Player hub = ev.Target;
 			if ( CheckAllowed() )
-				Timing.CallDelayed( RespawnTimerValue, () => RevivePlayer( hub ) );
+				Timing.CallDelayed( plugin.Config.RespawnTimer, () => RevivePlayer( hub ) );
 		}
 
-		public void RunOnCommand( ref RACommandEvent r )
+		public void RunOnCommand( SendingRemoteAdminCommandEventArgs ev )
 		{
 			try
 			{
-				string arg = r.Command;
-				ReferenceHub sender = r.Sender.SenderId == "SERVER CONSOLE" || r.Sender.SenderId == "GAME CONSOLE" ? PlayerManager.localPlayer.GetPlayer() : Player.GetPlayer( r.Sender.SenderId );
-
+				string arg = ev.Name;
+				Player sender = ev.Sender;
 				if ( arg.ToLower() == "allowautorespawn" )
 				{
-					r.Allow = false;
-					if ( !sender.CheckPermission( "rtp.allow" ) )
+					if ( ev.IsAllowed )
 					{
-						r.Sender.RAMessage( "You are not authorized to use this command" );
+						sender.RemoteAdminMessage( "You are not authorized to use this command" );
 						return;
 					}
 					if ( !AllowRespawning )
 					{
-						r.Sender.RAMessage( "Auto respawning enabled!" );
-						Map.Broadcast( "<color=green>Auto respawning enabled!</color>", 5 );
+						sender.RemoteAdminMessage( "Auto respawning enabled!" );
+						Map.Broadcast( 5, "<color=green>Auto respawning enabled!</color>" );
 						AllowRespawning = true;
 					}
 					else
 					{
-						r.Sender.RAMessage( "Auto respawning disabled!" );
-						Map.Broadcast( "<color=red>Auto respawning disabled!</color>", 5 );
+						sender.RemoteAdminMessage( "Auto respawning disabled!" );
+						Map.Broadcast( 5, "<color=red>Auto respawning disabled!</color>" );
 						AllowRespawning = false;
 					}
 				}
@@ -59,26 +57,26 @@ namespace ReliveThePast
 			}
 		}
 
-		public void RevivePlayer( ReferenceHub rh )
+		public void RevivePlayer( Player ply )
 		{
-			if ( rh.GetRole() != RoleType.Spectator || !CheckAllowed() ) return;
+			if ( ply.Role != RoleType.Spectator || !CheckAllowed() ) return;
 			int num = randNum.Next( 0, 2 );
 			switch ( num )
 			{
 				case 0:
-					rh.characterClassManager.SetPlayersClass( RoleType.Scientist, rh.gameObject );
+					ply.SetRole( RoleType.Scientist );
 					break;
 				case 1:
-					rh.characterClassManager.SetPlayersClass( RoleType.ClassD, rh.gameObject );
+					ply.SetRole( RoleType.ClassD );
 					break;
 			}
 		}
 
 		public bool CheckAllowed()
 		{
-			IsWarheadDetonated = Map.IsNukeDetonated;
+			IsWarheadDetonated = Warhead.IsDetonated;
 			IsDecontanimationActivated = Map.IsLCZDecontaminated;
-			IsWarheadInProgress = Map.IsNukeInProgress;
+			IsWarheadInProgress = Warhead.IsInProgress;
 			if ( AllowRespawning && !IsWarheadDetonated && !IsDecontanimationActivated && !IsWarheadInProgress )
 				return true;
 			return false;

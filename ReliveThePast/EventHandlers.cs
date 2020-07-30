@@ -12,10 +12,8 @@ namespace ReliveThePast
 		public EventHandlers( Plugin plugin ) => this.plugin = plugin;
 
 		Random randNum = new Random();
-		bool IsWarheadDetonated;
-		bool IsDecontanimationActivated;
-		bool IsWarheadInProgress;
 		bool AllowRespawning = true;
+		bool DeconSoon = false;
 
 		public void RunOnPlayerDeath( DiedEventArgs ev )
 		{
@@ -74,12 +72,14 @@ namespace ReliveThePast
 
 		public bool CheckAllowed()
 		{
-			IsWarheadDetonated = Warhead.IsDetonated;
-			IsDecontanimationActivated = Map.IsLCZDecontaminated;
-			IsWarheadInProgress = Warhead.IsInProgress;
-			if ( AllowRespawning && !IsWarheadDetonated && !IsDecontanimationActivated && !IsWarheadInProgress )
+			if ( AllowRespawning && !Warhead.IsDetonated && !Map.IsLCZDecontaminated && !Warhead.IsInProgress && !DeconSoon )
 				return true;
 			return false;
+		}
+
+		public void OnRoundStart()
+		{
+			Timing.CallDelayed( 645f, () => DeconSoon = true );
 		}
 	}
 }

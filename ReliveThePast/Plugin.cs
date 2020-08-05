@@ -18,6 +18,7 @@ namespace ReliveThePast
 			events.Player.Died += EventHandlers.RunOnPlayerDeath;
 			events.Server.SendingRemoteAdminCommand += EventHandlers.RunOnCommand;
 			events.Server.RoundStarted += EventHandlers.OnRoundStart;
+			events.Server.RoundEnded += EventHandlers.OnRoundEnd;
 			Log.Info( $"Successfully loaded." );
 		}
 
@@ -27,6 +28,7 @@ namespace ReliveThePast
 			events.Player.Died -= EventHandlers.RunOnPlayerDeath;
 			events.Server.SendingRemoteAdminCommand -= EventHandlers.RunOnCommand;
 			events.Server.RoundStarted -= EventHandlers.OnRoundStart;
+			events.Server.RoundEnded -= EventHandlers.OnRoundEnd;
 			EventHandlers = null;
 		}
 	}

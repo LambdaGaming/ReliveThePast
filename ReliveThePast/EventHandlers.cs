@@ -81,5 +81,10 @@ namespace ReliveThePast
 		{
 			Timing.CallDelayed( 645f, () => DeconSoon = true );
 		}
+
+		public void OnRoundEnd( RoundEndedEventArgs ev )
+		{
+			DeconSoon = false;
+		}
 	}
 }

@@ -16,7 +16,6 @@ namespace ReliveThePast
 			Log.Info( "Starting up \"Re-live The Past - By DefyTheRush; Modified by LambdaGaming\"" );
 			EventHandlers = new EventHandlers( this );
 			events.Player.Died += EventHandlers.RunOnPlayerDeath;
-			events.Server.SendingRemoteAdminCommand += EventHandlers.RunOnCommand;
 			events.Server.RoundStarted += EventHandlers.OnRoundStart;
 			events.Server.RoundEnded += EventHandlers.OnRoundEnd;
 			Log.Info( $"Successfully loaded." );
@@ -26,7 +25,6 @@ namespace ReliveThePast
 		{
 			base.OnDisabled();
 			events.Player.Died -= EventHandlers.RunOnPlayerDeath;
-			events.Server.SendingRemoteAdminCommand -= EventHandlers.RunOnCommand;
 			events.Server.RoundStarted -= EventHandlers.OnRoundStart;
 			events.Server.RoundEnded -= EventHandlers.OnRoundEnd;
 			EventHandlers = null;

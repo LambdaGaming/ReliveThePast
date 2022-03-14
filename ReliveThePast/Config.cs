@@ -9,6 +9,12 @@ namespace ReliveThePast
 		public bool IsEnabled { get; set; } = true;
 
 		[Description( "Time it takes in seconds for players to respawn after dying. (For instant respawn set to 0.05)" )]
-		public float RespawnTimer { get; private set; } = 120f;
+		public float RespawnTimer { get; set; } = 120f;
+
+		[Description( "Time it takes in seconds before respawned Class D's spawn with a keycard." )]
+		public float KeycardDelay { get; set; } = 300f;
+
+		[Description( "Type of keycard that Class D's spawn with after the set time." )]
+		public ItemType KeycardType { get; set; } = ItemType.KeycardJanitor;
 	}
 }

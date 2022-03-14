@@ -13,30 +13,35 @@ namespace ReliveThePast
 
 		Random randNum = new Random();
 		bool DeconSoon = false;
+		bool SpawnWithKeycard = false;
 
 		public void RunOnPlayerDeath( DiedEventArgs ev )
 		{
 			Player hub = ev.Target;
-			if ( CheckAllowed() )
+			if ( RespawnAllowed() )
 				Timing.CallDelayed( plugin.Config.RespawnTimer, () => RevivePlayer( hub ) );
 		}
 
 		public void RevivePlayer( Player ply )
 		{
-			if ( ply.Role != RoleType.Spectator || !CheckAllowed() ) return;
-			int num = randNum.Next( 0, 2 );
-			switch ( num )
+			if ( ply.Role == RoleType.Spectator && RespawnAllowed() )
 			{
-				case 0:
-					ply.SetRole( RoleType.Scientist );
-					break;
-				case 1:
-					ply.SetRole( RoleType.ClassD );
-					break;
+				int num = randNum.Next( 0, 2 );
+				switch ( num )
+				{
+					case 0:
+						ply.SetRole( RoleType.Scientist );
+						if ( SpawnWithKeycard )
+							ply.AddItem( plugin.Config.KeycardType );
+						break;
+					case 1:
+						ply.SetRole( RoleType.ClassD );
+						break;
+				}
 			}
 		}
 
-		public bool CheckAllowed()
+		public bool RespawnAllowed()
 		{
 			return !Warhead.IsDetonated && !Map.IsLczDecontaminated && !Warhead.IsInProgress && !DeconSoon;
 		}
@@ -44,6 +49,7 @@ namespace ReliveThePast
 		public void OnRoundStart()
 		{
 			Timing.CallDelayed( 645f, () => DeconSoon = true );
+			Timing.CallDelayed( plugin.Config.KeycardDelay, () => SpawnWithKeycard = true );
 		}
 
 		public void OnRoundEnd( RoundEndedEventArgs ev )

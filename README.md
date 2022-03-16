@@ -1,16 +1,5 @@
 # ReliveThePast
-An SCP:SL EXILED plugin that respawns players automatically as a non-SCP class
+Lite version of ReliveThePast that only respawns players as scientist or class D, for use on servers with smaller player counts.
 
-Drop it in the following places (depending on your operating system) and enjoy people respawn!
-- %appdata%/Roaming/Plugins (Windows)
-- ~/.config/Plugins (Linux)
-
-Config Variables:
-- relive_enable: (true or false)
-- relive_respawn_timer: (decimal or whole number)
-
-Permission Variable:
-- rtp.allow (lets the role use the command "allowautorespawn")
-
-Remote Admin Command:
-- allowautorespawn (requires rtp.allow permission)
+# Notes:
+See your EXILED config for respawn options. (Make sure you run the server at least once with the plugin so the configs generate.)

@@ -8,9 +8,7 @@ namespace ReliveThePast
 	public class EventHandlers
 	{
 		private Plugin plugin;
-
 		public EventHandlers( Plugin plugin ) => this.plugin = plugin;
-
 		Random randNum = new Random();
 		bool DeconSoon = false;
 		bool SpawnWithKeycard = false;

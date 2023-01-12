@@ -1,6 +1,8 @@
 ﻿using Exiled.API.Features;
-using Exiled.Events.EventArgs;
+using Exiled.Events.EventArgs.Player;
+using Exiled.Events.EventArgs.Server;
 using MEC;
+using PlayerRoles;
 using System;
 
 namespace ReliveThePast
@@ -15,25 +17,25 @@ namespace ReliveThePast
 
 		public void RunOnPlayerDeath( DiedEventArgs ev )
 		{
-			Player hub = ev.Target;
+			Player hub = ev.Player;
 			if ( RespawnAllowed() )
 				Timing.CallDelayed( plugin.Config.RespawnTimer, () => RevivePlayer( hub ) );
 		}
 
 		public void RevivePlayer( Player ply )
 		{
-			if ( ply.Role == RoleType.Spectator && RespawnAllowed() )
+			if ( ply.Role == RoleTypeId.Spectator && RespawnAllowed() )
 			{
 				int num = randNum.Next( 0, 2 );
 				switch ( num )
 				{
 					case 0:
-						ply.SetRole( RoleType.Scientist );
+						ply.Role.Set( RoleTypeId.Scientist );
 						if ( SpawnWithKeycard )
 							ply.AddItem( plugin.Config.KeycardType );
 						break;
 					case 1:
-						ply.SetRole( RoleType.ClassD );
+						ply.Role.Set( RoleTypeId.ClassD );
 						break;
 				}
 			}

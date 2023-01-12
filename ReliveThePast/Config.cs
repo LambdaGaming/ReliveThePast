@@ -8,6 +8,9 @@ namespace ReliveThePast
 		[Description( "Indicates whether the plugin is enabled or not" )]
 		public bool IsEnabled { get; set; } = true;
 
+		[Description( "Whether or not debug messages should be shown in the console." )]
+		public bool Debug { get; set; } = false;
+
 		[Description( "Time it takes in seconds for players to respawn after dying. (For instant respawn set to 0.05)" )]
 		public float RespawnTimer { get; set; } = 120f;
 

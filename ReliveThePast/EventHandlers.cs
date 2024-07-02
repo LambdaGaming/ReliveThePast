@@ -31,11 +31,11 @@ namespace ReliveThePast
 				{
 					case 0:
 						ply.Role.Set( RoleTypeId.Scientist );
-						if ( SpawnWithKeycard )
-							ply.AddItem( plugin.Config.KeycardType );
 						break;
 					case 1:
 						ply.Role.Set( RoleTypeId.ClassD );
+						if ( SpawnWithKeycard )
+							ply.AddItem( plugin.Config.KeycardType );
 						break;
 				}
 			}

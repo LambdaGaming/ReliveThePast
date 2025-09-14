@@ -3,6 +3,7 @@ using Exiled.Events.EventArgs.Player;
 using Exiled.Events.EventArgs.Server;
 using MEC;
 using PlayerRoles;
+using Respawning;
 using System;
 
 namespace ReliveThePast
@@ -43,7 +44,7 @@ namespace ReliveThePast
 
 		public bool RespawnAllowed()
 		{
-			return !Warhead.IsDetonated && !Map.IsLczDecontaminated && !Warhead.IsInProgress && !DeconSoon;
+			return !Warhead.IsDetonated && !Map.IsLczDecontaminated && !Warhead.IsInProgress && !DeconSoon && WaveManager.Waves.Count > 0;
 		}
 
 		public void OnRoundStart()

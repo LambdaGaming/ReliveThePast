@@ -19,7 +19,7 @@ namespace ReliveThePast
 		public void RunOnPlayerDeath( DiedEventArgs ev )
 		{
 			Player hub = ev.Player;
-			if ( RespawnAllowed() )
+			if ( RespawnAllowed() && plugin.Config.RespawnTimer > 0 )
 				Timing.CallDelayed( plugin.Config.RespawnTimer, () => RevivePlayer( hub ) );
 		}
 
@@ -50,7 +50,8 @@ namespace ReliveThePast
 		public void OnRoundStart()
 		{
 			Timing.CallDelayed( 645f, () => DeconSoon = true );
-			Timing.CallDelayed( plugin.Config.KeycardDelay, () => SpawnWithKeycard = true );
+			if ( plugin.Config.KeycardDelay > 0 )
+				Timing.CallDelayed( plugin.Config.KeycardDelay, () => SpawnWithKeycard = true );
 		}
 
 		public void OnRoundEnd( RoundEndedEventArgs ev )

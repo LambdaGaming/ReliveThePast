@@ -8,7 +8,7 @@ namespace ReliveThePast
 	public class Plugin : Plugin<Config>
 	{
 		private EventHandlers EventHandlers;
-		public override Version Version { get; } = new Version( 2, 6, 0 );
+		public override Version Version { get; } = new Version( 2, 5, 1 );
 		public override Version RequiredExiledVersion { get; } = new Version( 9, 10, 0 );
 		public override string Author { get; } = "OPGman";
 		public override PluginPriority Priority { get; } = PluginPriority.Medium;

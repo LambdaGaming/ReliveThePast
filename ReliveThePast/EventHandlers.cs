@@ -23,10 +23,10 @@ namespace ReliveThePast
 				switch ( num )
 				{
 					case 0:
-						ply.Role.Set( RoleTypeId.Scientist );
+						ply.Role.Set( RoleTypeId.Scientist, reason: SpawnReason.Respawn );
 						break;
 					case 1:
-						ply.Role.Set( RoleTypeId.ClassD );
+						ply.Role.Set( RoleTypeId.ClassD, reason: SpawnReason.Respawn );
 						if ( SpawnWithKeycard )
 							ply.AddItem( plugin.Config.KeycardType );
 						break;

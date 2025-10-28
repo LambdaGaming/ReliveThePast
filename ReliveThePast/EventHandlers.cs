@@ -1,6 +1,6 @@
-﻿using Exiled.API.Features;
+﻿using Exiled.API.Enums;
+using Exiled.API.Features;
 using Exiled.Events.EventArgs.Player;
-using Exiled.Events.EventArgs.Server;
 using MEC;
 using PlayerRoles;
 using Respawning;
@@ -13,17 +13,9 @@ namespace ReliveThePast
 		private Plugin plugin;
 		public EventHandlers( Plugin plugin ) => this.plugin = plugin;
 		Random randNum = new Random();
-		bool DeconSoon = false;
 		bool SpawnWithKeycard = false;
 
-		public void RunOnPlayerDeath( DiedEventArgs ev )
-		{
-			Player hub = ev.Player;
-			if ( RespawnAllowed() && plugin.Config.RespawnTimer > 0 )
-				Timing.CallDelayed( plugin.Config.RespawnTimer, () => RevivePlayer( hub ) );
-		}
-
-		public void RevivePlayer( Player ply )
+		private void RevivePlayer( Player ply )
 		{
 			if ( ply.Role == RoleTypeId.Spectator && RespawnAllowed() )
 			{
@@ -42,21 +34,23 @@ namespace ReliveThePast
 			}
 		}
 
-		public bool RespawnAllowed()
+		private bool RespawnAllowed()
 		{
-			return !Warhead.IsDetonated && !Map.IsLczDecontaminated && !Warhead.IsInProgress && !DeconSoon && WaveManager.Waves.Count > 0;
+			bool deconSoon = Map.DecontaminationState == DecontaminationState.Countdown || Map.DecontaminationState == DecontaminationState.Lockdown;
+			return !Warhead.IsDetonated && !Map.IsLczDecontaminated && !Warhead.IsInProgress && !deconSoon && WaveManager.Waves.Count > 0;
+		}
+
+		public void OnPlayerDeath( DiedEventArgs ev )
+		{
+			Player hub = ev.Player;
+			if ( RespawnAllowed() && plugin.Config.RespawnTimer > 0 )
+				Timing.CallDelayed( plugin.Config.RespawnTimer, () => RevivePlayer( hub ) );
 		}
 
 		public void OnRoundStart()
 		{
-			Timing.CallDelayed( 645f, () => DeconSoon = true );
 			if ( plugin.Config.KeycardDelay > 0 )
 				Timing.CallDelayed( plugin.Config.KeycardDelay, () => SpawnWithKeycard = true );
-		}
-
-		public void OnRoundEnd( RoundEndedEventArgs ev )
-		{
-			DeconSoon = false;
 		}
 	}
 }

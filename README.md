@@ -5,3 +5,6 @@ Respawning is disabled if any of the following conditions are met:
 - Light Containment decontamination has started, or is less than 30 seconds away from starting
 - Warhead has detonated or countdown is active
 - All MTF and Chaos respawn waves have been paused
+
+# Contributing
+ Contributions are welcome! Please read through the [guidelines](https://lambdagaming.github.io/guides/contributing) before submitting an issue or pull request.

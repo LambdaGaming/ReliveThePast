@@ -6,5 +6,8 @@ Respawning is disabled if any of the following conditions are met:
 - Warhead has detonated or countdown is active
 - All MTF and Chaos respawn waves have been paused
 
+# Building
+ The project files are intended to be built using either the command line or VSCode with the C# Dev Tools extension, but Visual Studio should work too. You will need to have the SCP:SL dedicated server and .NET SDK 8 or above installed. You will also need to change the reference paths in the .csproj file to the location of your dedicated server.
+
 # Contributing
  Contributions are welcome! Please read through the [guidelines](https://lambdagaming.github.io/guides/contributing) before submitting an issue or pull request.
